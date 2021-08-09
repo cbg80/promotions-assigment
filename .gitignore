@@ -36,3 +36,5 @@
 
 # IDE files
 .project
+/webservice/.buildpath
+/webservice/.settings/
