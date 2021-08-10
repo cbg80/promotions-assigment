@@ -41,6 +41,16 @@ class Promotion
      */
     private Collection $categories;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $categoryName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $productSku;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -126,6 +136,30 @@ class Promotion
         if ($this->categories->removeElement($category)) {
             $category->removePromotion($this);
         }
+
+        return $this;
+    }
+
+    public function getCategoryName(): ?string
+    {
+        return $this->categoryName;
+    }
+
+    public function setCategoryName(?string $categoryName): self
+    {
+        $this->categoryName = $categoryName;
+
+        return $this;
+    }
+
+    public function getProductSku(): ?string
+    {
+        return $this->productSku;
+    }
+
+    public function setProductSku(?string $productSku): self
+    {
+        $this->productSku = $productSku;
 
         return $this;
     }
