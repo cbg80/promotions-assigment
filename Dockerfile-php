@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install \
         pdo_mysql \
         zip
+RUN apt-get install -qy $PHPIZE_DEPS \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 COPY . /var/www/promotions-assigment
 WORKDIR /var/www/promotions-assigment/
