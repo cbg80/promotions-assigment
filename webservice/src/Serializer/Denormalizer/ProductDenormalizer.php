@@ -41,6 +41,6 @@ class ProductDenormalizer implements DenormalizerInterface, DenormalizerAwareInt
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type == Product::class;
+        return $type == Product::class && !array_key_exists(ProductPageDenormalizer::ASSOC_KEY_FOR_PRODUCT_PAGE, $data);
     }
 }
