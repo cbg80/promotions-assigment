@@ -34,7 +34,6 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 
                 $jsonProductPage = $file->getContents();
                 $denormalizedProductArray = $this->serializer->deserialize($jsonProductPage, Product::class, 'json');
-                var_dump($denormalizedProductArray);
             } catch (\Exception $e) {
                 print 'Exception ' . $file->getBasename() . '-' . $e->getMessage() . PHP_EOL;
             }
