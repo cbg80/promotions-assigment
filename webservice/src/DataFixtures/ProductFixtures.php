@@ -10,6 +10,9 @@ use Symfony\Component\Finder\Finder;
 use App\Entity\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Entity\Category;
+use App\Repository\DoctrinePromotionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -34,6 +37,38 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 
                 $jsonProductPage = $file->getContents();
                 $denormalizedProductArray = $this->serializer->deserialize($jsonProductPage, Product::class, 'json');
+                if (count($denormalizedProductArray) > 0) {
+                    $uniqueDenormalizedCategoryCollection = new ArrayCollection();
+                    /** @var $denormalizedProduct Product **/
+                    /** @var $denormalizedCategory Category **/
+                    foreach ($denormalizedProductArray as $denormalizedProduct) {
+                        $denormalizedCategoryCollection = $denormalizedProduct->getCategories();
+                        $denormalizedCategoryCollection->map(function($denormalizedCategory) use ($manager, $uniqueDenormalizedCategoryCollection, $denormalizedProduct) {
+                            if ($uniqueDenormalizedCategoryCollection->containsKey($denormalizedCategory->getName())) {
+                                $denormalizedProduct->removeCategory($denormalizedCategory);
+                                $denormalizedCategory = $uniqueDenormalizedCategoryCollection->get($denormalizedCategory->getName());
+                                $denormalizedProduct->addCategory($denormalizedCategory);
+                            } else {
+                                $promotionsToCategoryArray = $manager->getRepository('App:Promotion')->findBy(['categoryName' => $denormalizedCategory->getName()]);
+                                if (count($promotionsToCategoryArray) > 0) {
+                                    foreach ($promotionsToCategoryArray as $promotionToCategory) {
+                                        $denormalizedCategory->addPromotion($promotionToCategory);
+                                    }
+                                }
+                                $uniqueDenormalizedCategoryCollection->set($denormalizedCategory->getName(), $denormalizedCategory);
+                            }
+                            return $denormalizedCategory;
+                        });
+                        $promotionsToProductArray = $manager->getRepository('App:Promotion')->findBy(['productSku' => $denormalizedProduct->getSku()]);
+                        if (count($promotionsToProductArray) > 0) {
+                            foreach ($promotionsToProductArray as $promotionToProduct) {
+                                $denormalizedProduct->addPromotion($promotionToProduct);
+                            }
+                        }
+                        $manager->persist($denormalizedProduct);
+                    }
+                    $manager->flush();
+                }
             } catch (\Exception $e) {
                 print 'Exception ' . $file->getBasename() . '-' . $e->getMessage() . PHP_EOL;
             }
