@@ -36,7 +36,7 @@ class Product
     private string $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class)
+     * @ORM\ManyToMany(targetEntity=Category::class, cascade={"persist"})
      */
     private Collection $categories;
 
