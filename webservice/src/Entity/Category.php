@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Table(indexes={
+ *      @ORM\Index(name="idx_category_name", columns={"name"})
+ * })
  */
 class Category
 {
