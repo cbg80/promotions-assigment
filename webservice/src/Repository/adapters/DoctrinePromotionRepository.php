@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Repository;
+declare(strict_types=1);
+
+namespace App\Repository\adapters;
 
 use App\Entity\Promotion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
