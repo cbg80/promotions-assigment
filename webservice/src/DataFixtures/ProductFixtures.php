@@ -11,7 +11,7 @@ use App\Entity\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\Category;
-use App\Repository\DoctrinePromotionRepository;
+use App\Repository\adapters\DoctrinePromotionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
