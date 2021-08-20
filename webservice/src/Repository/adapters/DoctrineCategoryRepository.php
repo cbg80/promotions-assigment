@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Repository;
+declare(strict_types=1);
+
+namespace App\Repository\adapters;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -12,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Category[]    findAll()
  * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoryRepository extends ServiceEntityRepository
+class DoctrineCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
