@@ -83,6 +83,6 @@ class Price
             $discountPercentage = 0;
         }
         
-        return (int)$this->original * (1 - (float)$discountPercentage/100);
+        return (int)($this->original * (1 - (float)$discountPercentage/100));
     }
 }
