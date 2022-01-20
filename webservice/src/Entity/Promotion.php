@@ -16,8 +16,7 @@ class Promotion
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="guid", unique=true)
+     * @ORM\Column(type="string", length=36)
      */
     private string $id;
 
