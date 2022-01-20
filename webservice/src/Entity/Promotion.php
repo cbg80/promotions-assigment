@@ -51,10 +51,11 @@ class Promotion
      */
     private ?string $productSku;
 
-    public function __construct()
+    public function __construct(string $id)
     {
         $this->products = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->id = $id;
     }
 
     public function getId(): string

@@ -50,10 +50,11 @@ class Product
      */
     private Price $price;
 
-    public function __construct()
+    public function __construct(string $id)
     {
         $this->categories = new ArrayCollection();
         $this->promotions = new ArrayCollection();
+        $this->id = $id;
     }
 
     public function getId(): string

@@ -34,9 +34,10 @@ class Category
      */
     private Collection $promotions;
 
-    public function __construct()
+    public function __construct(string $id)
     {
         $this->promotions = new ArrayCollection();
+        $this->id = $id;
     }
 
     public function getId(): string
