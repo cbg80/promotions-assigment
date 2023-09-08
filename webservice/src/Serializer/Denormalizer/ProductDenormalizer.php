@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use App\Entity\Product;
 use App\Entity\Category;
 use App\VO\Price;
+use Ramsey\Uuid\Uuid;
 
 class ProductDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
@@ -21,7 +22,7 @@ class ProductDenormalizer implements DenormalizerInterface, DenormalizerAwareInt
         $product = NULL;
         
         if (isset($data['sku'], $data['name'], $data['category'], $data['price'])) {
-            $product = new Product();
+            $product = new Product(Uuid::uuid4()->toString());
             
             $product->setSku($data['sku']);
             $product->setName($data['name']);

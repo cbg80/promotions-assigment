@@ -6,6 +6,7 @@ namespace App\Serializer\Denormalizer;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use App\Entity\Category;
+use Ramsey\Uuid\Uuid;
 
 class CategoryDenormalizer implements DenormalizerInterface
 {
@@ -15,7 +16,7 @@ class CategoryDenormalizer implements DenormalizerInterface
         $category = NULL;
         
         if (isset($data)) {
-            $category = new Category();
+            $category = new Category(Uuid::uuid4()->toString());
             
             $category->setName($data);
         }
